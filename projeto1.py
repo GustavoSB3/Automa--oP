@@ -1,9 +1,3 @@
-from flask import flask
-
-app = Flask(__name__)
-
-app.run(debug=True)
-
 import PyPDF2
 import os
 
