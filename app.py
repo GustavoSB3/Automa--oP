@@ -1,21 +1,14 @@
-from flask import Flask, send_file, render_template
-from projeto1 import lista_arquivos
+from flask import Flask, send_file
+from flask_cors import CORS
+from projeto1 import mesclar_pdfs as merger
+from io import BytesIO
 
 app = Flask(__name__)
+CORS(app)
 
-@app.route("/")
-def home():
-   titulo = "Gestão de Usuários"
-   usuarios = [
-      { "nome": "Guilherme", "membro_ativo": True },
-      { "nome": "Guilherme", "membro_ativo": True },
-      { "nome": "Guilherme", "membro_ativo": True },
-      ]
-   return render_template("index.html", titulo=titulo, usuarios=usuarios)
-
-@app.route("/mesclar")
+@app.route("/merger", methods=["POST"])
 def mesclar():
-   caminho = lista_arquivos()
-   return send_file(caminho, as_attachment=True)
+    caminho = merger()
+    return send_file(caminho, as_attachment=True)
 
-app.run(debug=True)
+app.run(host="0.0.0.0", port=10000)
