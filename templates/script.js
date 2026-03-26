@@ -37,6 +37,7 @@ async function enviarPDFs() {
     a.href = url;
     a.download = "PDF_Final.pdf";
     a.click();
+    console.log("Download feito com sucesso!");
   } catch (error) {
     console.log(error.message);
   }
