@@ -52,7 +52,7 @@ async function enviarDB() {
   formData.append("db", file);
 
   try {
-    const response = await fetch("http://127.0.0.1:10000/converter-db-excel", {
+    const response = await fetch("/converter-db-excel", {
       method: "POST",
       body: formData,
     });
