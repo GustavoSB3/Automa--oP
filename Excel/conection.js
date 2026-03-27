@@ -38,3 +38,39 @@ async function enviarExcel() {
     alert("Falha na conversão: " + error.message);
   }
 }
+
+async function enviarDB() {
+  const input = document.getElementById("dbInput");
+  const file = input.files[0];
+
+  if (!file) {
+    alert("Selecione um banco de dados!");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("db", file);
+
+  try {
+    const response = await fetch("http://127.0.0.1:10000/converter-db-excel", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) throw new Error(`Erro: ${response.status}`);
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "convertido.xlsx";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    console.log("DB convertido para Excel!");
+  } catch (error) {
+    alert("Erro: " + error.message);
+  }
+}

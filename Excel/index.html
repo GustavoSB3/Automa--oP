@@ -33,4 +33,13 @@
 
     <script src="conection.js"></script>
   </body>
+
+  <div class="mt-4">
+    <label class="form-label">Selecione um banco (.db):</label>
+    <input class="form-control" type="file" id="dbInput" accept=".db" />
+
+    <button onclick="enviarDB()" class="btn btn-success w-100 mt-2">
+      Converter para Excel
+    </button>
+  </div>
 </html>
