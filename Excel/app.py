@@ -69,5 +69,3 @@ def converter_db_excel():
         return str(e), 500
 
 
-if __name__ == '__main__':
-    app.run(port=10000, debug=True)
