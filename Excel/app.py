@@ -1,14 +1,18 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, render_template
 from flask_cors import CORS
 import pandas as pd
 from sqlalchemy import create_engine
 import os
 import traceback  
 
+
 app = Flask(__name__)
 CORS(app)
 
-# 🔹 EXCEL → DB
+@app.route("/")
+def home():
+    return render_template("index.html")
+
 @app.route("/converter", methods=["POST"])
 def converter():
     try:

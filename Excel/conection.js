@@ -14,7 +14,7 @@ async function enviarExcel() {
   formData.append("excel", file);
 
   try {
-    const response = await fetch("http://127.0.0.1:10000/converter", {
+    const response = await fetch("/converter", {
       method: "POST",
       body: formData,
     });
