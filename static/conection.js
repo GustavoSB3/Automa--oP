@@ -2,6 +2,18 @@ async function enviarExcel() {
   const input = document.getElementById("excelInput");
   const file = input.files[0];
 
+  const allowedTypes = [
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/excel",
+  ];
+
+  if (!allowedTypes.includes(file.type)) {
+    alert(
+      "O formato do arquivo não é válido! O arquivo tem que ser .xlsx ou .xls",
+    );
+    return;
+  }
+
   if (!file) {
     alert("Por favor, selecione um arquivo Excel!"); // Adicionei o alert que faltava
     return;
@@ -73,4 +85,7 @@ async function enviarDB() {
   } catch (error) {
     alert("Erro: " + error.message);
   }
+
+  button.innerText = "Convertendo...";
+  button.disabled = true;
 }

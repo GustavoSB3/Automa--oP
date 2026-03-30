@@ -3,20 +3,25 @@ from flask_cors import CORS
 import pandas as pd
 from sqlalchemy import create_engine
 import os
-import traceback  
-
+import traceback
 
 app = Flask(__name__)
 CORS(app)
+
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
+
 @app.route("/converter", methods=["POST"])
 def converter():
     try:
-        arquivo_excel = request.files['excel']
+        arquivo_excel = request.files["excel"]
+
+        
+        if not arquivo_excel.filename.endswith((".xlsx", ".xls")):
+            return "Arquivo inválido! Envie apenas Excel (.xlsx ou .xls)", 400
 
         arquivo_excel.save("teste.xlsx")
 
@@ -29,7 +34,7 @@ def converter():
             name="produtos_logistica",
             con=engine,
             if_exists="replace",
-            index=False
+            index=False,
         )
 
         if not os.path.exists(nome_db):
@@ -42,21 +47,24 @@ def converter():
         return str(e), 500
 
 
-# 🔹 DB → EXCEL
+
 @app.route("/converter-db-excel", methods=["POST"])
 def converter_db_excel():
     try:
-        arquivo_db = request.files['db']
+        arquivo_db = request.files["db"]
+
+       
+        if not arquivo_db.filename.endswith(".db"):
+            return "Arquivo inválido! Envie apenas .db", 400
 
         caminho_db = "temp.db"
         arquivo_db.save(caminho_db)
 
         engine = create_engine(f"sqlite:///{caminho_db}")
 
-        # pegar nome das tabelas
         tabelas = pd.read_sql(
             "SELECT name FROM sqlite_master WHERE type='table';",
-            engine
+            engine,
         )
 
         nome_tabela = tabelas.iloc[0, 0]
@@ -73,3 +81,4 @@ def converter_db_excel():
         return str(e), 500
 
 
+app.run(host="0.0.0.0", port=10000, debug=True)
