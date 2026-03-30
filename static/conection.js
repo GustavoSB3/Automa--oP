@@ -55,6 +55,10 @@ async function enviarDB() {
   const input = document.getElementById("dbInput");
   const file = input.files[0];
 
+  const button = document.getElementById("enviarDB");
+
+  button.disabled = true;
+
   if (!file) {
     alert("Selecione um banco de dados!");
     return;
