@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 import os
 import traceback
 
+
 app = Flask(__name__)
 CORS(app)
 
