@@ -68,10 +68,13 @@ async function enviarDB() {
   formData.append("db", file);
 
   try {
-    const response = await fetch("https://automa-op-1.onrender.com/converter", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      "https://automa-op-1.onrender.com/converter-db-excel",
+      {
+        method: "POST",
+        body: formData,
+      },
+    );
 
     if (!response.ok) throw new Error(`Erro: ${response.status}`);
 
