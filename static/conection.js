@@ -53,6 +53,7 @@ async function enviarExcel() {
 
 async function enviarDB() {
   const input = document.getElementById("dbInput");
+  const file = input.files[0];
 
   const button = document.getElementById("enviarDB");
 
@@ -60,8 +61,6 @@ async function enviarDB() {
     alert("Selecione um banco de dados!");
     return;
   }
-
-  const file = input.files[0];
 
   const formData = new FormData();
   formData.append("db", file);
