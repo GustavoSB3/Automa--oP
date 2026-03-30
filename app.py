@@ -81,4 +81,3 @@ def converter_db_excel():
         return str(e), 500
 
 
-app.run(host="0.0.0.0", port=10000, debug=True)
