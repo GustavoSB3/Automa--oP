@@ -26,13 +26,10 @@ async function enviarExcel() {
   formData.append("excel", file);
 
   try {
-    const response = await fetch(
-      "https://automa-o-p-4iym.vercel.app/converter",
-      {
-        method: "POST",
-        body: formData,
-      },
-    );
+    const response = await fetch("https://automa-op-1.onrender.com/converter", {
+      method: "POST",
+      body: formData,
+    });
 
     if (!response.ok) throw new Error(`Erro no servidor: ${response.status}`);
 
