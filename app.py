@@ -89,16 +89,16 @@ def converter_db_excel():
 @app.route("/converter-excel-csv", methods=["POST"])
 def converter_excel_csv():
     try:
-        arquivo_db = request.files["db"]
+        arquivo_csv = request.files["db"]
 
        
-        if not arquivo_db.filename.endswith(".db"):
+        if not arquivo_csv.filename.endswith(".csv"):
             return "Arquivo inválido! Envie apenas .db", 400
 
-        caminho_db = "temp.db"
-        arquivo_db.save(caminho_db)
+        caminho_csv = "temp.csv"
+        arquivo_csv.save(caminho_csv)
 
-        engine = create_engine(f"sqlite:///{caminho_db}")
+        engine = create_engine(f"sqlite:///{caminho_csv}")
 
         tabelas = pd.read_sql(
             "SELECT name FROM sqlite_master WHERE type='table';",
@@ -109,10 +109,10 @@ def converter_excel_csv():
 
         df = pd.read_sql(f"SELECT * FROM {nome_tabela}", engine)
 
-        nome_excel = "resultado.xlsx"
-        df.to_excel(nome_excel, index=False)
+        nome_excel = "resultado.csv"
+        df.to_csv(nome_csv, index=False)
 
-        return send_file(nome_excel, as_attachment=True)
+        return send_file(nome_csv, as_attachment=True)
 
     except Exception as e:
         print(traceback.format_exc())
