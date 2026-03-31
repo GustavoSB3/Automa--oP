@@ -86,7 +86,7 @@ def converter_db_excel():
         print(traceback.format_exc())
         return str(e), 500
     
-@app.route("/converter-excel-csv", methods=["POST"])
+@app.route("/converter_excel_csv", methods=["POST"])
 def converter_excel_csv():
     try:
         arquivo_csv = request.files["db"]

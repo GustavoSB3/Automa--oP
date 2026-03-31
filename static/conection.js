@@ -133,5 +133,4 @@ async function enviarCSV() {
   }
 
   button.innerText = "Convertendo...";
-  button.disabled = true;
 }
