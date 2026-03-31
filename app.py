@@ -21,8 +21,13 @@ def converter():
         arquivo_excel = request.files["excel"]
 
         
-        if not arquivo_excel.filename.endswith((".xlsx", ".xls")):
-            return "Arquivo inválido! Envie apenas Excel (.xlsx ou .xls)", 400
+        if "excel" not in request.files:
+            return "Nenhum arquivo enviado", 400
+        
+        arquivo_excel = request.files["excel"]
+
+        if arquivo_excel.filename == "":
+         return "Arquivo sem nome", 400
 
         arquivo_excel.save("teste.xlsx")
 
