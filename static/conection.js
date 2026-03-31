@@ -107,10 +107,13 @@ async function enviarCSV() {
   formData.append("CSV", file);
 
   try {
-    const response = await fetch("https://automa-op-1.onrender.com/converter", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      "https://automa-op-1.onrender.com/converter_excel_csv",
+      {
+        method: "POST",
+        body: formData,
+      },
+    );
 
     if (!response.ok) throw new Error(`Erro: ${response.status}`);
 
