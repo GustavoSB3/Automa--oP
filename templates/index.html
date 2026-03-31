@@ -2,24 +2,24 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conversor Excel ↔ DB</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      window.va =
+        window.va ||
+        function () {
+          (window.vaq = window.vaq || []).push(arguments);
+        };
+    </script>
+    <script defer src="/_vercel/analytics/script.js"></script>
   </head>
 
-  <script>
-    window.va =
-      window.va ||
-      function () {
-        (window.vaq = window.vaq || []).push(arguments);
-      };
-  </script>
-  <script defer src="/_vercel/analytics/script.js"></script>
-
-  <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="max-w-4xl w-full p-6">
-      <!-- Título -->
-      <div class="text-center mb-8">
+  <body class="bg-gray-100 min-h-screen flex items-start justify-center p-8">
+    <div class="max-w-4xl w-full">
+      <div class="text-center mb-10">
         <h1 class="text-3xl font-bold text-gray-800">
           Conversor Excel ↔ SQLite
         </h1>
@@ -28,56 +28,69 @@
         </p>
       </div>
 
-      <!-- Cards -->
       <div class="grid md:grid-cols-2 gap-6">
-        <!-- Excel → DB -->
         <div
-          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition"
+          id="excelBar"
+          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
         >
           <h2 class="text-xl font-semibold mb-4 text-gray-700">
             📥 Excel → Banco (.db)
           </h2>
-
           <input
             type="file"
             id="excelInput"
             accept=".xlsx, .xls"
-            class="w-full mb-4 p-2 border rounded-lg"
+            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
           />
-
           <button
             onclick="enviarExcel()"
-            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-bold"
           >
             Converter e baixar
           </button>
         </div>
 
-        <!-- DB → Excel -->
         <div
-          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition"
+          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
         >
           <h2 class="text-xl font-semibold mb-4 text-gray-700">
             📤 Banco (.db) → Excel
           </h2>
-
           <input
             type="file"
             id="dbInput"
             accept=".db"
-            class="w-full mb-4 p-2 border rounded-lg"
+            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
           />
-
           <button
             onclick="enviarDB()"
-            class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+            class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-bold"
           >
             Converter e baixar para Excel
           </button>
         </div>
+
+        <div
+          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
+        >
+          <h2 class="text-xl font-semibold mb-4 text-gray-700">
+            📤 Excel → CSV
+          </h2>
+          <input
+            type="file"
+            id="CSVinput"
+            accept="CSV"
+            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+          />
+          <button
+            onclick="enviarCSV()"
+            class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition font-bold"
+          >
+            Converter para CSV
+          </button>
+        </div>
       </div>
     </div>
-
     <script src="{{ url_for('static', filename='conection.js') }}"></script>
   </body>
 </html>
