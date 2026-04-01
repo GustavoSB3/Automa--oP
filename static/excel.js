@@ -44,7 +44,12 @@ async function enviarExcel() {
     a.click();
     a.remove();
 
+    function enviarExcel() {
+      console.log("ok");
+    }
+
     window.enviarExcel = enviarExcel;
+
     console.log("Excel convertido para DB com sucesso!");
   } catch (error) {
     alert("Falha na conversão: " + error.message);
