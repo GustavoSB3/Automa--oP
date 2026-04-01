@@ -86,30 +86,27 @@ def converter_db_excel():
         print(traceback.format_exc())
         return str(e), 500
     
+from flask import request, send_file
+import pandas as pd
+import traceback
+
 @app.route("/converter_excel_csv", methods=["POST"])
 def converter_excel_csv():
     try:
-        arquivo_csv = request.files["CSV"]
+        arquivo_excel = request.files["file"]  
 
-       
-        if not arquivo_csv.filename.endswith(".xls", "xlsx"):
-            return "Arquivo inválido! Excel (.xls ou .xlsx)", 400
+        
+        if not arquivo_excel.filename.endswith((".xls", ".xlsx")):
+            return "Envie apenas arquivos Excel (.xls ou .xlsx)", 400
 
-        caminho_csv = "temp.xlsx"
-        arquivo_csv.save(caminho_excel)
+        caminho_excel = "temp.xlsx"
+        arquivo_excel.save(caminho_excel)
 
-        engine = create_engine(f"sqlite:///{caminho_csv}")
+        
+        df = pd.read_excel(caminho_excel)
 
-        tabelas = pd.read_sql(
-            "SELECT name FROM sqlite_master WHERE type='table';",
-            engine,
-        )
-
-        nome_tabela = tabelas.iloc[0, 0]
-
-        df = pd.read_sql(f"SELECT * FROM {nome_tabela}", engine)
-
-        nome_excel = "resultado.csv"
+        
+        nome_csv = "resultado.csv"
         df.to_csv(nome_csv, index=False)
 
         return send_file(nome_csv, as_attachment=True)
@@ -117,9 +114,3 @@ def converter_excel_csv():
     except Exception as e:
         print(traceback.format_exc())
         return str(e), 500
-
-import os
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
