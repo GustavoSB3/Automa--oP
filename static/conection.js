@@ -104,6 +104,9 @@ async function enviarCSV() {
     return;
   }
 
+  button.innerText = "Convertendo...";
+  button.disabled = true;
+
   const formData = new FormData();
   formData.append("file", file);
 
