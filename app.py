@@ -89,14 +89,14 @@ def converter_db_excel():
 @app.route("/converter_excel_csv", methods=["POST"])
 def converter_excel_csv():
     try:
-        arquivo_csv = request.files["db"]
+        arquivo_csv = request.files["CSV"]
 
        
-        if not arquivo_csv.filename.endswith(".csv"):
-            return "Arquivo inválido! Envie apenas .db", 400
+        if not arquivo_csv.filename.endswith(".xls", "xlsx"):
+            return "Arquivo inválido! Excel (.xls ou .xlsx)", 400
 
-        caminho_csv = "temp.csv"
-        arquivo_csv.save(caminho_csv)
+        caminho_csv = "temp.xlsx"
+        arquivo_csv.save(caminho_excel)
 
         engine = create_engine(f"sqlite:///{caminho_csv}")
 
