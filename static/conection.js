@@ -134,6 +134,8 @@ async function enviarCSV() {
     console.log("CSV convertido para Excel!");
   } catch (error) {
     alert("Erro: " + error.message);
+  } finally {
+    configurarBotao(button, false, "converter para CSV");
   }
 
   button.innerText = "Convertendo...";
