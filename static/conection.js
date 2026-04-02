@@ -19,6 +19,9 @@ async function enviarExcel() {
     return;
   }
 
+  button.innerText = "Convertendo...";
+  button.disabled = true;
+
   // Ajuste 1: FormData com F e D maiúsculos
   const formData = new FormData();
 
@@ -47,6 +50,12 @@ async function enviarExcel() {
     console.log("Excel convertido para DB com sucesso!");
   } catch (error) {
     alert("Falha na conversão: " + error.message);
+  } finally {
+    // REATIVA O BOTÃO NO FIM (DENTRO DO FINALLY)
+    if (button) {
+      button.innerText = "Converter e baixar para Excel";
+      button.disabled = false;
+    }
   }
 }
 
