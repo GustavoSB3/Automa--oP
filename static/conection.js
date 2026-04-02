@@ -60,6 +60,8 @@ async function enviarDB() {
     alert("Selecione um banco de dados!");
     return;
   }
+  button.innerText = "Convertendo...";
+  button.disabled = true;
 
   const formData = new FormData();
   formData.append("db", file);
@@ -88,10 +90,13 @@ async function enviarDB() {
     console.log("DB convertido para Excel!");
   } catch (error) {
     alert("Erro: " + error.message);
+  } finally {
+    // REATIVA O BOTÃO NO FIM (DENTRO DO FINALLY)
+    if (button) {
+      button.innerText = "Converter e baixar para Excel";
+      button.disabled = false;
+    }
   }
-
-  button.innerText = "Convertendo...";
-  button.disabled = true;
 }
 
 async function enviarCSV() {
@@ -135,9 +140,10 @@ async function enviarCSV() {
   } catch (error) {
     alert("Erro: " + error.message);
   } finally {
-    configurarBotao(button, false, "converter para CSV");
+    // REATIVA O BOTÃO NO FIM (DENTRO DO FINALLY)
+    if (button) {
+      button.innerText = "Converter para CSV";
+      button.disabled = false;
+    }
   }
-
-  button.innerText = "Convertendo...";
-  button.disabled = true;
 }
