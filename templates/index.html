@@ -8,8 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script
       src="https://kit.fontawesome.com/c1dd1409d9.js"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
 
     <script>
       window.va =
@@ -35,74 +34,65 @@
       <div class="grid md:grid-cols-2 gap-6">
         <div
           id="excelBar"
-          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
-        >
+          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col">
           <h2 class="text-xl font-semibold mb-4 text-gray-700">
             <i
               class="fa-solid fa-file-excel"
-              style="color: rgb(39, 118, 74)"
-            ></i>
+              style="color: rgb(39, 118, 74)"></i>
             Excel → Banco (.db) <i class="fa-solid fa-database"></i>
           </h2>
           <input
             type="file"
             id="excelInput"
             accept=".xlsx, .xls"
-            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-          />
+            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
           <button
+            id="enviarExcel"
             onclick="enviarExcel()"
-            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-bold"
-          >
+            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-bold">
             Converter e baixar
           </button>
         </div>
 
         <div
-          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
-        >
+          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col">
           <h2 class="text-xl font-semibold mb-4 text-gray-700">
             <i class="fa-solid fa-database"></i>
             Banco (.db) → Excel
             <i
               class="fa-solid fa-file-excel"
-              style="color: rgb(39, 118, 74)"
-            ></i>
+              style="color: rgb(39, 118, 74)"></i>
           </h2>
           <input
             type="file"
             id="dbInput"
             accept=".db"
-            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-          />
+            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none" />
           <button
+            id="enviarDB"
             onclick="enviarDB()"
-            class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-bold"
-          >
+            class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-bold">
             Converter e baixar para Excel
           </button>
         </div>
 
         <div
-          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
-        >
+          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col">
           <h2 class="text-xl font-semibold mb-4 text-gray-700">
             <i
               class="fa-solid fa-file-excel"
-              style="color: rgb(39, 118, 74)"
-            ></i>
+              style="color: rgb(39, 118, 74)"></i>
             Excel → CSV <i class="fa-solid fa-database"></i>
           </h2>
           <input
             type="file"
             id="CSVinput"
             accept=".xls, .xlsx"
-            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
-          />
+            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none" />
           <button
+            id="enviarCSV"
             onclick="enviarCSV()"
-            class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition font-bold"
-          >
+            class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition font-bold">
             Converter para CSV
           </button>
         </div>
