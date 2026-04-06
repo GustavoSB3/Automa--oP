@@ -9,16 +9,15 @@ async function enviarExcel() {
     "application/excel",
   ];
 
+  if (!file) {
+    alert("Por favor, selecione um arquivo Excel!"); // Adicionei o alert que faltava
+    return;
+  }
+
   if (!allowedTypes.includes(file.type)) {
     alert(
       "O formato do arquivo não é válido! O arquivo tem que ser .xlsx ou .xls",
     );
-    return;
-  }
-
-  if (!file) {
-    alert("Por favor, selecione um arquivo Excel!"); // Adicionei o alert que faltava
-    return;
   }
 
   button.innerText = "Convertendo...";
@@ -72,17 +71,16 @@ async function enviarDB() {
     "application/excel",
   ];
 
-  if (!allowedTypes.includes(file.type)) {
-    alert(
-      "O formato do arquivo não é válido! O arquivo tem que ser .xlsx ou .xls",
-    );
-    return;
-  }
-
   if (!file) {
     alert("Selecione um banco de dados!");
     return;
   }
+
+  if (!allowedTypes.endsWith(".db")) {
+    alert("O formato do arquivo não é válido! O arquivo tem que ser .db");
+    return;
+  }
+
   button.innerText = "Convertendo...";
   button.disabled = true;
 
