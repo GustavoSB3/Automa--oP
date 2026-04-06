@@ -2,6 +2,8 @@ async function enviarExcel() {
   const input = document.getElementById("excelInput");
   const file = input.files[0];
 
+  const button = document.getElementById("enviarExcel");
+
   const allowedTypes = [
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     "application/excel",
@@ -64,6 +66,18 @@ async function enviarDB() {
   const file = input.files[0];
 
   const button = document.getElementById("enviarDB");
+
+  const allowedTypes = [
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/excel",
+  ];
+
+  if (!allowedTypes.includes(file.type)) {
+    alert(
+      "O formato do arquivo não é válido! O arquivo tem que ser .xlsx ou .xls",
+    );
+    return;
+  }
 
   if (!file) {
     alert("Selecione um banco de dados!");
