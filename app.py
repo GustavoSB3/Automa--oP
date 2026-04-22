@@ -5,6 +5,17 @@ from sqlalchemy import create_engine
 import os
 import traceback
 
+from apscheduler.schedulers.background import BackgroundScheduler
+
+scheduler = BackgroundScheduler()
+
+def tarefa_conversao():
+
+    pass
+
+scheduler.add_job(tarefa_conversao, 'interval', hours =24)
+scheduler.start()
+
 
 app = Flask(__name__)
 CORS(app)
