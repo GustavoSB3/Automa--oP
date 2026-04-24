@@ -5,10 +5,34 @@ from sqlalchemy import create_engine
 import os
 
 
-
 app = Flask(__name__)
 CORS(app)
 
+def enviar_email(destinatario, caminho_arquivo, nome_arquivo):
+    remetente = "gugapudgod@gmail.com"
+    senha = "ybif sasz jdkx epam"
+
+    msg = MIMEMultipart()
+    msg["Subject"] = "Seu arquivo convertido está pronto!"
+    msg["From"] = remetente
+    msg["To"] = destinatario
+
+    corpo = MIMEText("Olá! Segue em anexo o arquivo convertido pelo Conversor de Arquivos.")
+    msg.attach(corpo)
+
+    with open(caminho_arquivo, "rb") as f:
+        anexo = MIMEBase("application", "octet-stream")
+        anexo.set_payload(f.read())
+
+    encoders.encode_base64(anexo)
+    anexo.add_header("Content-Disposition", f"attachment; filename={nome_arquivo}")
+    msg.attach(anexo)
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(remetente, senha)
+        server.sendmail(remetente, destinatario, msg.as_string())
+
+    print(f"E-mail enviado para {destinatario}!")
 
 @app.route("/")
 def home():
@@ -46,7 +70,6 @@ def converter():
         return send_file(nome_db, as_attachment=True)
 
     except Exception as e:
-        print(traceback.format_exc())
         return str(e), 500
 
 
@@ -76,7 +99,6 @@ def converter_db_excel():
         return send_file(nome_excel, as_attachment=True)
 
     except Exception as e:
-        print(traceback.format_exc())
         return str(e), 500
 
 
@@ -99,5 +121,10 @@ def converter_excel_csv():
         return send_file(nome_csv, as_attachment=True)
 
     except Exception as e:
-        print(traceback.format_exc())
         return str(e), 500
+    
+scheduler = BackgroundScheduler()
+scheduler.start()
+
+if __name__ == "__main__":
+    app.run(debug=True)
