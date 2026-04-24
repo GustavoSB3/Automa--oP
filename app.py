@@ -3,18 +3,7 @@ from flask_cors import CORS
 import pandas as pd
 from sqlalchemy import create_engine
 import os
-import traceback
 
-from apscheduler.schedulers.background import BackgroundScheduler
-
-scheduler = BackgroundScheduler()
-
-def tarefa_conversao():
-
-    pass
-
-scheduler.add_job(tarefa_conversao, 'interval', hours =24)
-scheduler.start()
 
 
 app = Flask(__name__)
@@ -29,16 +18,13 @@ def home():
 @app.route("/converter", methods=["POST"])
 def converter():
     try:
-        arquivo_excel = request.files["excel"]
-
-        
         if "excel" not in request.files:
             return "Nenhum arquivo enviado", 400
-        
+
         arquivo_excel = request.files["excel"]
 
         if arquivo_excel.filename == "":
-         return "Arquivo sem nome", 400
+            return "Arquivo sem nome", 400
 
         arquivo_excel.save("teste.xlsx")
 
@@ -64,14 +50,12 @@ def converter():
         return str(e), 500
 
 
-
 @app.route("/converter-db-excel", methods=["POST"])
 def converter_db_excel():
     try:
-        arquivo_db = request.files["db"]
+        arquivo_db = request.files.get("db")
 
-       
-        if not arquivo_db.filename.endswith(".db"):
+        if not arquivo_db or not arquivo_db.filename.endswith(".db"):
             return "Arquivo inválido! Envie apenas .db", 400
 
         caminho_db = "temp.db"
@@ -80,12 +64,10 @@ def converter_db_excel():
         engine = create_engine(f"sqlite:///{caminho_db}")
 
         tabelas = pd.read_sql(
-            "SELECT name FROM sqlite_master WHERE type='table';",
-            engine,
+            "SELECT name FROM sqlite_master WHERE type='table';", engine
         )
 
         nome_tabela = tabelas.iloc[0, 0]
-
         df = pd.read_sql(f"SELECT * FROM {nome_tabela}", engine)
 
         nome_excel = "resultado.xlsx"
@@ -96,27 +78,21 @@ def converter_db_excel():
     except Exception as e:
         print(traceback.format_exc())
         return str(e), 500
-    
-from flask import request, send_file
-import pandas as pd
-import traceback
+
 
 @app.route("/converter_excel_csv", methods=["POST"])
 def converter_excel_csv():
     try:
-        arquivo_excel = request.files["file"]  
+        arquivo_excel = request.files.get("file")
 
-        
-        if not arquivo_excel.filename.endswith((".xls", ".xlsx")):
+        if not arquivo_excel or not arquivo_excel.filename.endswith((".xls", ".xlsx")):
             return "Envie apenas arquivos Excel (.xls ou .xlsx)", 400
 
         caminho_excel = "temp.xlsx"
         arquivo_excel.save(caminho_excel)
 
-        
         df = pd.read_excel(caminho_excel)
 
-        
         nome_csv = "resultado.csv"
         df.to_csv(nome_csv, index=False)
 
