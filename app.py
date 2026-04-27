@@ -1,8 +1,15 @@
-from flask import Flask, request, send_file, render_template
+from flask import Flask, request, send_file, render_template, jsonify
 from flask_cors import CORS
 import pandas as pd
 from sqlalchemy import create_engine
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+from datetime import datetime, timedelta
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 app = Flask(__name__)
@@ -33,6 +40,40 @@ def enviar_email(destinatario, caminho_arquivo, nome_arquivo):
         server.sendmail(remetente, destinatario, msg.as_string())
 
     print(f"E-mail enviado para {destinatario}!")
+
+@app.route("/converter-e-agendar", methods=["POST"])
+def converter_e_agendar():
+    try:
+        if "file" not in request.files or "email" not in request.form:
+            return jsonify({"erro": "Arquivo ou e-mail não informado"}), 400
+
+        arquivo = request.files["file"]
+        email_destino = request.form["email"]
+
+        if not arquivo.filename.endswith((".xls", ".xlsx")):
+            return jsonify({"erro": "Envie apenas arquivos Excel (.xls ou .xlsx)"}), 400
+
+        caminho_excel = "temp_agendado.xlsx"
+        arquivo.save(caminho_excel)
+
+        df = pd.read_excel(caminho_excel, engine="openpyxl")
+
+        caminho_csv = "resultado_agendado.csv"
+        df.to_csv(caminho_csv, index=False)
+
+        horario = datetime.now() + timedelta(minutes=1)
+
+        scheduler.add_job(
+            enviar_email,
+            trigger="date",
+            run_date=horario,
+            args=[email_destino, caminho_csv, "resultado.csv"]
+        )
+
+        return jsonify({"mensagem": f"Arquivo recebido! E-mail será enviado em 1 minuto para {email_destino}."}), 200
+
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
 
 @app.route("/")
 def home():
