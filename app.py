@@ -16,6 +16,11 @@ app = Flask(__name__)
 CORS(app)
 
 def enviar_email(destinatario, caminho_arquivo, nome_arquivo):
+
+    print(f"=== INICIANDO ENVIO PARA {destinatario} ===")
+
+    print(f"=== E-MAIL ENVIADO COM SUCESSO ===")
+
     remetente = "gugapudgod@gmail.com"
     senha = "ybif sasz jdkx epam"
 
@@ -43,6 +48,10 @@ def enviar_email(destinatario, caminho_arquivo, nome_arquivo):
 
 @app.route("/converter-e-agendar", methods=["POST"])
 def converter_e_agendar():
+
+    print("=== REQUISIÇÃO RECEBIDA ===")
+
+    print(f"=== JOB AGENDADO PARA {horario} ===")
     try:
         if "file" not in request.files or "email" not in request.form:
             return jsonify({"erro": "Arquivo ou e-mail não informado"}), 400
