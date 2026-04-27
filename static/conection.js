@@ -168,3 +168,62 @@ async function enviarCSV() {
     }
   }
 }
+
+async function enviarArquivo() {
+  const input = document.getElementById("sendInput");
+  const file = input.files[0];
+
+  const button = document.getElementById("sendButton");
+
+  const allowedTypes = [
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  ];
+
+  if (!file) {
+    alert("Selecione um arquivo para enviar.");
+    return;
+  }
+
+  if (!allowedTypes.includes(file.type)) {
+    alert("Tipo de arquivo não permitido. Selecione um pdf.");
+    return;
+  }
+
+  button.innerText = "Convertendo...";
+  button.disabled = true;
+
+  const formData = new FormData();
+
+  formData.append("file", file);
+  formData.append("email", document.getElementById("email").value);
+
+  try {
+    const response = await fetch("/converter-e-agendar", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) throw new Error(`Erro no servidor: ${response.status}`);
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "logistica_convertida.db";
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    console.log("Excel convertido para DB com sucesso!");
+  } catch (error) {
+    alert("Falha na conversão: " + error.message);
+  } finally {
+    // REATIVA O BOTÃO NO FIM (DENTRO DO FINALLY)
+    if (button) {
+      button.innerText = "Converter e baixar para Excel";
+      button.disabled = false;
+    }
+  }
+}
