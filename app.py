@@ -17,10 +17,6 @@ CORS(app)
 
 def enviar_email(destinatario, caminho_arquivo, nome_arquivo):
 
-    print(f"=== INICIANDO ENVIO PARA {destinatario} ===")
-
-    print(f"=== E-MAIL ENVIADO COM SUCESSO ===")
-
     remetente = "gugapudgod@gmail.com"
     senha = "ybif sasz jdkx epam"
 
@@ -46,12 +42,32 @@ def enviar_email(destinatario, caminho_arquivo, nome_arquivo):
 
     print(f"E-mail enviado para {destinatario}!")
 
+def enviar_email_bytes(destinatario, conteudo_bytes, nome_arquivo):
+    remetente = "gugapudgod@gmail.com"
+    senha = "ybif sasz jdkx epam"
+
+    msg = MIMEMultipart()
+    msg["Subject"] = "Seu arquivo convertido está pronto!"
+    msg["From"] = remetente
+    msg["To"] = destinatario
+
+    corpo = MIMEText("Segue em anexo o arquivo convertido.")
+    msg.attach(corpo)
+
+    anexo = MIMEBase("application", "octet-stream")
+    anexo.set_payload(conteudo_bytes)
+    encoders.encode_base64(anexo)
+    anexo.add_header("Content-Disposition", f"attachment; filename={nome_arquivo}")
+    msg.attach(anexo)
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(remetente, senha)
+        server.sendmail(remetente, destinatario, msg.as_string())
+
+    print(f"E-mail enviado para {destinatario}!")
+
 @app.route("/converter-e-agendar", methods=["POST"])
 def converter_e_agendar():
-
-    print("=== REQUISIÇÃO RECEBIDA ===")
-
-    print(f"=== JOB AGENDADO PARA {horario} ===")
     try:
         if "file" not in request.files or "email" not in request.form:
             return jsonify({"erro": "Arquivo ou e-mail não informado"}), 400
@@ -62,24 +78,19 @@ def converter_e_agendar():
         if not arquivo.filename.endswith((".xls", ".xlsx")):
             return jsonify({"erro": "Envie apenas arquivos Excel (.xls ou .xlsx)"}), 400
 
-        caminho_excel = "temp_agendado.xlsx"
-        arquivo.save(caminho_excel)
+        # lê na memória, sem salvar no disco
+        import io
+        conteudo = arquivo.read()
+        df = pd.read_excel(io.BytesIO(conteudo), engine="openpyxl")
 
-        df = pd.read_excel(caminho_excel, engine="openpyxl")
+        csv_buffer = io.StringIO()
+        df.to_csv(csv_buffer, index=False)
+        csv_bytes = csv_buffer.getvalue().encode("utf-8")
 
-        caminho_csv = "resultado_agendado.csv"
-        df.to_csv(caminho_csv, index=False)
+        # envia imediatamente
+        enviar_email_bytes(email_destino, csv_bytes, "resultado.csv")
 
-        horario = datetime.now() + timedelta(minutes=1)
-
-        scheduler.add_job(
-            enviar_email,
-            trigger="date",
-            run_date=horario,
-            args=[email_destino, caminho_csv, "resultado.csv"]
-        )
-
-        return jsonify({"mensagem": f"Arquivo recebido! E-mail será enviado em 1 minuto para {email_destino}."}), 200
+        return jsonify({"mensagem": f"Arquivo convertido e enviado para {email_destino}!"}), 200
 
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
