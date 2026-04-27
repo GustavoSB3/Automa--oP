@@ -202,10 +202,13 @@ async function enviarArquivo() {
   formData.append("email", email);
 
   try {
-    const response = await fetch("/converter-e-agendar", {
-      method: "POST",
-      body: formData,
-    });
+    const response = await fetch(
+      "https://automa-op-1.onrender.com/converter-e-agendar",
+      {
+        method: "POST",
+        body: formData,
+      },
+    );
 
     const data = await response.json(); // ← agora lê JSON, não blob
 
