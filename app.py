@@ -41,7 +41,7 @@ def enviar_email(destinatario, caminho_arquivo, nome_arquivo):
 
     print(f"E-mail enviado para {destinatario}!")
 
-@app.route("/converter-e-agendar", methods=["POST"])
+@app.route("https://automa-op-1.onrender.com/converter-e-agendar", methods=["POST"])
 def converter_e_agendar():
     try:
         if "file" not in request.files or "email" not in request.form:
