@@ -67,6 +67,6 @@ Criei esse projeto para resolver um problema prático: muitos sistemas legados e
 
 ## 📬 Contato
 
-Feito por **Gustavo Berg** — [LinkedIn](www.linkedin.com/in/gustavo-berg-31b97b1b9) · [GitHub](https://github.com/GustavoSB3)
+Feito por **Gustavo Berg** — [LinkedIn]([www.linkedin.com/in/gustavo-berg-31b97b1b9](https://www.linkedin.com/in/gustavo-berg-31b97b1b9/)) · [GitHub](https://github.com/GustavoSB3)
 
 > Aberto a oportunidades em desenvolvimento e freelances. Entre em contato!
