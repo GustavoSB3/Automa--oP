@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Central de Conversao de Arquivos</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://kit.fontawesome.com/c1dd1409d9.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      window.va =
+        window.va ||
+        function () {
+          (window.vaq = window.vaq || []).push(arguments);
+        };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+
+    <meta
+      name="google-site-verification"
+      content="cplArPx6ka82IqusXwsQQOoM3uAYNmCEct0wngfNijk"
+    />
+    </head>
+<main class="grid md:grid-cols-2 gap-6">
+    
+        <div
+          id="xlsx-db"
+          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
+        >
+          <h2 class="text-xl font-semibold mb-4 text-gray-700">
+            <i
+              class="fa-solid fa-file-excel"
+              style="color: rgb(39, 118, 74)"
+            ></i>
+            Excel → Banco (.db) <i class="fa-solid fa-database"></i>
+          </h2>
+          
+          
+          <input
+            type="file"
+            id="excelInput"
+            
+            accept=".xlsx, .xls"
+            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+          <button
+            id="enviarExcel"
+            onclick="enviarExcel()"
+            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-bold"
+          >
+            Converter e baixar
+          </button>
+
+          <input type="text" id="email" placeholder="Digite seu e-mail" />
+
+          <input type="text" id="message" placeholder="Digite sua mensagem" />
+
+          <input type="file" id="sendInput" accept="pdf" />
+
+          <button id="sendButton" onclick="enviarEmailXLS()">Enviar</button>
+        </div>
+
+        <div
+          id="db-xlsx"
+          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
+        >
+          <h2 class="text-xl font-semibold mb-4 text-gray-700">
+            <i class="fa-solid fa-database"></i>
+            Banco (.db) → Excel
+            <i
+              class="fa-solid fa-file-excel"
+              style="color: rgb(39, 118, 74)"
+            ></i>
+          </h2>
+          <input
+            type="file"
+            id="dbInput"
+            accept=".db"
+            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+          />
+          <button
+            id="enviarDB"
+            onclick="enviarDB()"
+            class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-bold"
+          >
+            Converter e baixar para Excel
+          </button>
+
+          <input type="text" id="email" placeholder="Digite seu e-mail" />
+
+          <input type="text" id="message" placeholder="Digite sua mensagem" />
+
+          <input type="file" id="sendInput" accept="pdf" />
+
+          <button id="sendButton" onclick="enviarEmailDB()">Enviar</button>
+        </div>
+
+        <div
+          id="xlsx-csv"
+          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
+        >
+          <h2 class="text-xl font-semibold mb-4 text-gray-700">
+            <i
+              class="fa-solid fa-file-excel"
+              style="color: rgb(39, 118, 74)"
+            ></i>
+            Excel → CSV <i class="fa-solid fa-database"></i>
+          </h2>
+          <input
+            type="file"
+            id="CSVinput"
+            accept=".xls, .xlsx"
+            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+          />
+          <button
+            id="enviarCSV"
+            onclick="enviarCSV()"
+            class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition font-bold"
+          >
+            Converter para CSV
+          </button>
+
+          <input type="text" id="email" placeholder="Digite seu e-mail" />
+
+          <input type="text" id="message" placeholder="Digite sua mensagem" />
+
+          <input type="file" id="sendInput" accept="pdf" />
+
+          <button id="sendButton" onclick="enviarArquivo()">Enviar</button>
+        </div>
+      </main>
+    </div>
+    <script src="{{ url_for('static', filename='conection.js') }}"></script>
+  </body>
+</html>

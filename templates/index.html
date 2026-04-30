@@ -24,13 +24,17 @@
       name="google-site-verification"
       content="cplArPx6ka82IqusXwsQQOoM3uAYNmCEct0wngfNijk"
     />
+
+    <a href="menu.html"></a>
   </head>
 
   <body class="bg-gray-100 min-h-screen flex items-start justify-center p-8">
     <div class="max-w-6xl w-full">
       <header class="mb-10">
         <div class="mb-6 text-center">
-          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">
+          <p
+            class="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600"
+          >
             Conversoes disponiveis
           </p>
           <h1 class="mt-3 text-3xl font-bold text-gray-800 md:text-4xl">
@@ -54,8 +58,8 @@
             </li>
             <li>
               <a
-                href="#db-xlsx"
-                class="flex items-center justify-center gap-2 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-emerald-600 hover:text-white"
+                href="menu.html?tipo=pdf-docx"
+                class="flex items-center justify-center gap-2 rounded-2xl bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-gray-500 hover:text-white"
               >
                 <i class="fa-solid fa-database"></i>
                 DB - XLSX
@@ -91,112 +95,6 @@
           </ul>
         </nav>
       </header>
-
-      <main class="grid md:grid-cols-2 gap-6">
-        <div
-          id="xlsx-db"
-          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
-        >
-          <h2 class="text-xl font-semibold mb-4 text-gray-700">
-            <i
-              class="fa-solid fa-file-excel"
-              style="color: rgb(39, 118, 74)"
-            ></i>
-            Excel → Banco (.db) <i class="fa-solid fa-database"></i>
-          </h2>
-          <input
-            type="file"
-            id="excelInput"
-            accept=".xlsx, .xls"
-            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-          />
-          <button
-            id="enviarExcel"
-            onclick="enviarExcel()"
-            class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-bold"
-          >
-            Converter e baixar
-          </button>
-
-          <input type="text" id="email" placeholder="Digite seu e-mail" />
-
-          <input type="text" id="message" placeholder="Digite sua mensagem" />
-
-          <input type="file" id="sendInput" accept="pdf" />
-
-          <button id="sendButton" onclick="enviarEmailXLS()">Enviar</button>
-        </div>
-
-        <div
-          id="db-xlsx"
-          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
-        >
-          <h2 class="text-xl font-semibold mb-4 text-gray-700">
-            <i class="fa-solid fa-database"></i>
-            Banco (.db) → Excel
-            <i
-              class="fa-solid fa-file-excel"
-              style="color: rgb(39, 118, 74)"
-            ></i>
-          </h2>
-          <input
-            type="file"
-            id="dbInput"
-            accept=".db"
-            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
-          />
-          <button
-            id="enviarDB"
-            onclick="enviarDB()"
-            class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition font-bold"
-          >
-            Converter e baixar para Excel
-          </button>
-
-          <input type="text" id="email" placeholder="Digite seu e-mail" />
-
-          <input type="text" id="message" placeholder="Digite sua mensagem" />
-
-          <input type="file" id="sendInput" accept="pdf" />
-
-          <button id="sendButton" onclick="enviarEmailDB()">Enviar</button>
-        </div>
-
-        <div
-          id="xlsx-csv"
-          class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col"
-        >
-          <h2 class="text-xl font-semibold mb-4 text-gray-700">
-            <i
-              class="fa-solid fa-file-excel"
-              style="color: rgb(39, 118, 74)"
-            ></i>
-            Excel → CSV <i class="fa-solid fa-database"></i>
-          </h2>
-          <input
-            type="file"
-            id="CSVinput"
-            accept=".xls, .xlsx"
-            class="w-full mb-4 p-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
-          />
-          <button
-            id="enviarCSV"
-            onclick="enviarCSV()"
-            class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition font-bold"
-          >
-            Converter para CSV
-          </button>
-
-          <input type="text" id="email" placeholder="Digite seu e-mail" />
-
-          <input type="text" id="message" placeholder="Digite sua mensagem" />
-
-          <input type="file" id="sendInput" accept="pdf" />
-
-          <button id="sendButton" onclick="enviarArquivo()">Enviar</button>
-        </div>
-      </main>
     </div>
-    <script src="{{ url_for('static', filename='conection.js') }}"></script>
   </body>
 </html>
