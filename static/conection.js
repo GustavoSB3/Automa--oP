@@ -1,16 +1,15 @@
 async function enviarExcel() {
   const input = document.getElementById("excelInput");
   const file = input.files[0];
-
   const button = document.getElementById("enviarExcel");
 
   const allowedTypes = [
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "application/excel",
+    "application/vnd.ms-excel",
   ];
 
   if (!file) {
-    alert("Por favor, selecione um arquivo Excel!"); // Adicionei o alert que faltava
+    alert("Por favor, selecione um arquivo Excel!");
     return;
   }
 
@@ -18,15 +17,13 @@ async function enviarExcel() {
     alert(
       "O formato do arquivo não é válido! O arquivo tem que ser .xlsx ou .xls",
     );
+    return;
   }
 
   button.innerText = "Convertendo...";
   button.disabled = true;
 
-  // Ajuste 1: FormData com F e D maiúsculos
   const formData = new FormData();
-
-  // Ajuste 2: O 'file' entra como segundo argumento dentro do parênteses
   formData.append("excel", file);
 
   try {
@@ -43,7 +40,6 @@ async function enviarExcel() {
     const a = document.createElement("a");
     a.href = url;
     a.download = "logistica_convertida.db";
-
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -52,31 +48,22 @@ async function enviarExcel() {
   } catch (error) {
     alert("Falha na conversão: " + error.message);
   } finally {
-    // REATIVA O BOTÃO NO FIM (DENTRO DO FINALLY)
-    if (button) {
-      button.innerText = "Converter e baixar para Excel";
-      button.disabled = false;
-    }
+    button.innerText = "Converter e baixar .db";
+    button.disabled = false;
   }
 }
 
 async function enviarDB() {
   const input = document.getElementById("dbInput");
   const file = input.files[0];
-
   const button = document.getElementById("enviarDB");
-
-  const allowedTypes = [
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "application/excel",
-  ];
 
   if (!file) {
     alert("Selecione um banco de dados!");
     return;
   }
 
-  if (!allowedTypes.endsWith(".db")) {
+  if (!file.name.endsWith(".db")) {
     alert("O formato do arquivo não é válido! O arquivo tem que ser .db");
     return;
   }
@@ -112,11 +99,8 @@ async function enviarDB() {
   } catch (error) {
     alert("Erro: " + error.message);
   } finally {
-    // REATIVA O BOTÃO NO FIM (DENTRO DO FINALLY)
-    if (button) {
-      button.innerText = "Converter e baixar para Excel";
-      button.disabled = false;
-    }
+    button.innerText = "Converter e baixar .xlsx";
+    button.disabled = false;
   }
 }
 
@@ -126,7 +110,7 @@ async function enviarCSV() {
   const button = document.getElementById("enviarCSV");
 
   if (!file) {
-    alert("Selecione um banco de dados!");
+    alert("Selecione um arquivo Excel!");
     return;
   }
 
@@ -157,15 +141,12 @@ async function enviarCSV() {
     a.click();
     a.remove();
 
-    console.log("CSV convertido para Excel!");
+    console.log("Excel convertido para CSV!");
   } catch (error) {
     alert("Erro: " + error.message);
   } finally {
-    // REATIVA O BOTÃO NO FIM (DENTRO DO FINALLY)
-    if (button) {
-      button.innerText = "Converter para CSV";
-      button.disabled = false;
-    }
+    button.innerText = "Converter para CSV";
+    button.disabled = false;
   }
 }
 
@@ -210,15 +191,24 @@ async function enviarArquivo() {
       },
     );
 
-    const data = await response.json(); // ← agora lê JSON, não blob
+    const data = await response.json();
 
     if (!response.ok) throw new Error(data.erro || "Erro no servidor");
 
-    alert(data.mensagem); // ← mostra a mensagem de confirmação
+    alert(data.mensagem);
   } catch (error) {
     alert("Falha: " + error.message);
   } finally {
     button.innerText = "Enviar";
     button.disabled = false;
   }
+}
+
+// Funções placeholder para conversões ainda não implementadas no backend
+function enviarPdfDocx() {
+  alert("Conversão PDF → DOCX em breve!");
+}
+
+function enviarPdfDb() {
+  alert("Conversão PDF → DB em breve!");
 }
