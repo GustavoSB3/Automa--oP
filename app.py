@@ -132,6 +132,10 @@ def converter():
 
     except Exception as e:
         return str(e), 500
+    
+@app.route('/menu')
+def menu():
+    return render_template('menu.html')
 
 
 @app.route("/converter-db-excel", methods=["POST"])
