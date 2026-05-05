@@ -97,7 +97,7 @@ def converter_e_agendar():
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return "API rodando 🚀"
 
 
 @app.route("/converter", methods=["POST"])
