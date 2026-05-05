@@ -1,6 +1,8 @@
 {
-  "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/menu", "dest": "/menu.html" }
+  "buildCommand": null,
+  "outputDirectory": "front-end",
+  "rewrites": [
+    { "source": "/menu", "destination": "/menu.html" },
+    { "source": "/", "destination": "/index.html" }
   ]
 }
