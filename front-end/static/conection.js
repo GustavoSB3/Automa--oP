@@ -240,7 +240,7 @@ async function enviarPdfDocx() {
 
   try {
     const response = await fetch(
-      "https://automa-op-1.onrender.com/converter-e-agendar",
+      "https://automa-op-1.onrender.com/converter_pdf_docx",
       {
         method: "POST",
         body: formData,
