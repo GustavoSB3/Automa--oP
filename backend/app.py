@@ -191,5 +191,29 @@ def converter_excel_csv():
 scheduler = BackgroundScheduler()
 scheduler.start()
 
+@app.route("/converter_pdf_docx", methods=["POST"])
+def converter_pdf_docx():
+    try:
+        arquivo_pdf = request.files.get("file")
+
+        if not arquivo_pdf or not arquivo_pdf.filename.endswith((".docx")):
+            return "Envie apenas arquivos Excel (.docx)", 400
+
+        caminho_pdf = "temp.docx"
+        arquivo_pdf.save(caminho_pdf)
+
+        df = pd.read_excel(caminho_pdf)
+
+        nome_docx = "resultado.pdf"
+        df.to_csv(nome_docx, index=False)
+
+        return send_file(nome_docx, as_attachment=True)
+
+    except Exception as e:
+        return str(e), 500
+    
+scheduler = BackgroundScheduler()
+scheduler.start()
+
 if __name__ == "__main__":
     app.run(debug=True)
