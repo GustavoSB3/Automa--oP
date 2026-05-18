@@ -205,7 +205,7 @@ async function enviarArquivo() {
 }
 
 // Funções placeholder para conversões ainda não implementadas no backend
-function enviarPdfDocx() {
+async function enviarPdfDocx() {
   const input = document.getElementById("sendInput");
   const file = input.files[0];
   const button = document.getElementById("sendButton");
@@ -221,7 +221,7 @@ function enviarPdfDocx() {
   }
 
   if (!allowedTypes.includes(file.type)) {
-    alert("Tipo de arquivo não permitido. Selecione um arquivo Excel (.xlsx).");
+    alert("Tipo de arquivo não permitido. Selecione um arquivo pdf (.pdf).");
     return;
   }
 
