@@ -208,7 +208,7 @@ async function enviarArquivo() {
 async function enviarPdfDocx() {
   const input = document.getElementById("pdfDocxInputsendInput");
   const file = input.files[0];
-  const button = document.getElementById("sendButton");
+  const button = document.getElementById("enviarPdfDocx");
 
   const allowedTypes = [
   "application/pdf",
