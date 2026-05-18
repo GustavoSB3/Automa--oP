@@ -206,9 +206,59 @@ async function enviarArquivo() {
 
 // Funções placeholder para conversões ainda não implementadas no backend
 function enviarPdfDocx() {
-  alert("Conversão PDF → DOCX em breve!");
-}
+  const input = document.getElementById("sendInput");
+  const file = input.files[0];
+  const button = document.getElementById("sendButton");
 
+  const allowedTypes = [
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  ];
+
+  if (!file) {
+    alert("Selecione um arquivo para enviar.");
+    return;
+  }
+
+  if (!allowedTypes.includes(file.type)) {
+    alert("Tipo de arquivo não permitido. Selecione um arquivo Excel (.xlsx).");
+    return;
+  }
+
+  const email = document.getElementById("email").value;
+  if (!email) {
+    alert("Digite seu e-mail.");
+    return;
+  }
+
+  button.innerText = "Enviando...";
+  button.disabled = true;
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("email", email);
+
+  try {
+    const response = await fetch(
+      "https://automa-op-1.onrender.com/converter-e-agendar",
+      {
+        method: "POST",
+        body: formData,
+      },
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.erro || "Erro no servidor");
+
+    alert(data.mensagem);
+  } catch (error) {
+    alert("Falha: " + error.message);
+  } finally {
+    button.innerText = "Enviar";
+    button.disabled = false;
+  }
+}
 function enviarPdfDb() {
   alert("Conversão PDF → DB em breve!");
 }
