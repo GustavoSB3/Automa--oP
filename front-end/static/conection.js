@@ -242,18 +242,26 @@ async function enviarPdfDocx() {
       },
     );
 
-    const data = await response.json();
+    if (!response.ok) throw new Error(`Erro: ${response.status}`);
 
-    if (!response.ok) throw new Error(data.erro || "Erro no servidor");
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
 
-    alert(data.mensagem);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "convertido.docx";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
   } catch (error) {
     alert("Falha: " + error.message);
   } finally {
-    button.innerText = "Enviar";
+    button.innerText = "Converter e baixar .docx";
     button.disabled = false;
   }
 }
+
 function enviarPdfDb() {
   alert("Conversão PDF → DB em breve!");
 }
