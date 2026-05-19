@@ -231,7 +231,7 @@ async function enviarPdfDocx() {
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("email", email);
+
 
   try {
     const response = await fetch(
