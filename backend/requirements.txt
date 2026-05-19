@@ -6,3 +6,5 @@ openpyxl
 gunicorn
 PyPDF2
 apscheduler
+pdfplumber
+python-docx
