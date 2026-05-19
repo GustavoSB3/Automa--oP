@@ -206,7 +206,7 @@ async function enviarArquivo() {
 
 // Funções placeholder para conversões ainda não implementadas no backend
 async function enviarPdfDocx() {
-  const input = document.getElementById("pdfDocxInputsendInput");
+  const input = document.getElementById("pdfDocxInput");
   const file = input.files[0];
   const button = document.getElementById("enviarPdfDocx");
 
