@@ -213,11 +213,13 @@ def converter_pdf_docx():
         for linha in texto.split("\n"):
             doc.add_paragraph(linha)
 
+        caminho_docx = "resultado.docx"
+        doc.save(caminho_docx)
+
         return send_file(caminho_docx, as_attachment=True)
 
     except Exception as e:
-        import traceback
-        return traceback.format_exc(), 500
+        return str(e), 500
     
 scheduler = BackgroundScheduler()
 scheduler.start()
