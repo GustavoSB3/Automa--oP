@@ -225,11 +225,6 @@ async function enviarPdfDocx() {
     return;
   }
 
-  const email = document.getElementById("email").value;
-  if (!email) {
-    alert("Digite seu e-mail.");
-    return;
-  }
 
   button.innerText = "Enviando...";
   button.disabled = true;
