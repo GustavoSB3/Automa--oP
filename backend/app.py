@@ -216,7 +216,8 @@ def converter_pdf_docx():
         return send_file(caminho_docx, as_attachment=True)
 
     except Exception as e:
-        return str(e), 500
+        import traceback
+        return traceback.format_exc(), 500
     
 scheduler = BackgroundScheduler()
 scheduler.start()
