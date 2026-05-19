@@ -10,7 +10,8 @@ from email.mime.base import MIMEBase
 from email import encoders
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
-
+import pdfplumber
+from docx import Document
 
 app = Flask(__name__)
 CORS(app)
@@ -196,18 +197,23 @@ def converter_pdf_docx():
     try:
         arquivo_pdf = request.files.get("file")
 
-        if not arquivo_pdf or not arquivo_pdf.filename.endswith((".docx")):
-            return "Envie apenas arquivos Excel (.docx)", 400
+        if not arquivo_pdf or not arquivo_pdf.filename.endswith((".pdf")):
+            return "Envie apenas arquivos PDF (.pdf)", 400
 
-        caminho_pdf = "temp.docx"
+        caminho_pdf = "temp.pdf"
         arquivo_pdf.save(caminho_pdf)
 
-        df = pd.read_excel(caminho_pdf)
+        texto = ""
+        with pdfplumber.open(caminho_pdf) as pdf:
+         for pagina in pdf.pages:
+            texto += pagina.extract_text() or ""
 
-        nome_docx = "resultado.pdf"
-        df.to_csv(nome_docx, index=False)
 
-        return send_file(nome_docx, as_attachment=True)
+        doc = Document()
+        for linha in texto.split("\n"):
+            doc.add_paragraph(linha)
+
+        return send_file(caminho_docx, as_attachment=True)
 
     except Exception as e:
         return str(e), 500
